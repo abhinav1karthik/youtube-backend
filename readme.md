@@ -1,4 +1,24 @@
+
 # YouTube Backend API
+
+## About
+
+This project is a robust backend API for a YouTube-inspired video sharing platform. Built with Node.js, Express, and MongoDB, it provides all the essential features for a modern video platform: user authentication, video uploads, comments, likes, subscriptions, and more. The backend is designed for scalability, security, and ease of integration with any frontend. Media files are managed via Cloudinary, and the API is ready for cloud deployment (Vercel).
+
+Key highlights:
+- Secure JWT authentication and refresh tokens
+- Efficient MongoDB aggregation for fast queries
+- File uploads and media management
+- Modular codebase for easy extension
+- Comprehensive API endpoints for all core features
+
+---
+
+## Model Link
+
+Explore the platform's architecture visually: [Eraser Model Workspace](https://app.eraser.io/workspace/wWwREt1prfLcmLBoOV69)
+
+---
 
 A scalable backend API for a YouTube-like video sharing platform, built with Node.js, Express, and MongoDB. This project supports user authentication, video upload and management, comments, likes, subscriptions, and more. It is designed for deployment on Vercel and uses Cloudinary for media storage.
 
