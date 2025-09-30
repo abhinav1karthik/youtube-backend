@@ -190,7 +190,9 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
 ### Postman Collection
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/a1b2c3d4-e5f6-7890-abcd-ef1234567890)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/45193519-6cf474ff-a9a3-4a31-b2ed-66abde1557ab)
+
+**Direct Postman Link:** [Open Collection in Postman](https://abhinavkarthik-5350948.postman.co/workspace/Abhinav-Karthik's-Workspace~56e7eed3-47be-4858-802b-479dad87d0f6/collection/45193519-6cf474ff-a9a3-4a31-b2ed-66abde1557ab?action=share&source=copy-link&creator=45193519)
 
 **Download Collection:** [Video_Streaming_API.postman_collection.json](https://raw.githubusercontent.com/abhinav1karthik/youtube-backend/main/Video_Streaming_API.postman_collection.json)
 
