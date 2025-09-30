@@ -194,14 +194,6 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
 **Download Collection:** [Video_Streaming_API.postman_collection.json](https://raw.githubusercontent.com/abhinav1karthik/youtube-backend/main/Video_Streaming_API.postman_collection.json)
 
-### Features
-
--   ✅ 25+ API endpoints covered
--   ✅ Auto-token management
--   ✅ Environment variables setup
--   ✅ Complete CRUD operations
--   ✅ File upload testing
-
 ### Quick Setup
 
 1. **Import Collection:** Click the link above or download the JSON file
