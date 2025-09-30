@@ -1,0 +1,856 @@
+{
+    "info": {
+        "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+        "name": "Video Streaming API - CORRECTED",
+        "description": "Complete API collection for Video Streaming Backend - Based on actual routes",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Health Check",
+            "item": [
+                {
+                    "name": "Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/healthcheck",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "healthcheck"]
+                        },
+                        "description": "Check if the API is running and healthy"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "User Management",
+            "item": [
+                {
+                    "name": "Register User",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "username",
+                                    "value": "demouser",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "demo@example.com",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "fullName",
+                                    "value": "Demo User",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "password123",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "avatar",
+                                    "type": "file",
+                                    "src": []
+                                },
+                                {
+                                    "key": "coverImage",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/users/register",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "users", "register"]
+                        },
+                        "description": "Register a new user account (requires avatar file)"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Login User",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 200) {",
+                                    "    const response = pm.response.json();",
+                                    "    if (response.success && response.data.accessToken) {",
+                                    "        pm.environment.set('access_token', response.data.accessToken);",
+                                    "        pm.environment.set('user_id', response.data.user._id);",
+                                    "        console.log('Access token saved:', response.data.accessToken);",
+                                    "    }",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"username\": \"demouser\",\n  \"password\": \"password123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/users/login",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "users", "login"]
+                        },
+                        "description": "Login user and get access token"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Current User",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/users/current-user",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "users", "current-user"]
+                        },
+                        "description": "Get current logged-in user details"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Logout User",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/users/logout",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "users", "logout"]
+                        },
+                        "description": "Logout current user"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Refresh Access Token",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"refreshToken\": \"{{refresh_token}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/users/refresh-token",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "users", "refresh-token"]
+                        },
+                        "description": "Refresh access token using refresh token"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Change Password",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"oldPassword\": \"password123\",\n  \"newPassword\": \"newpassword123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/users/change-password",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "users", "change-password"]
+                        },
+                        "description": "Change user password"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update User Details",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"fullName\": \"Updated Demo User\",\n  \"email\": \"updated@example.com\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/users/update-user",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "users", "update-user"]
+                        },
+                        "description": "Update user details (fullName, email)"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Avatar",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "avatar",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/users/update-avatar",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "users", "update-avatar"]
+                        },
+                        "description": "Update user avatar"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Cover Image",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "coverImage",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/users/update-coverImg",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "users", "update-coverImg"]
+                        },
+                        "description": "Update user cover image"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Channel Profile",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/users/c/{{username}}",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "users", "c", "{{username}}"]
+                        },
+                        "description": "Get channel profile by username"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Watch History",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/users/watch-history",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "users", "watch-history"]
+                        },
+                        "description": "Get user's watch history"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Video Management",
+            "item": [
+                {
+                    "name": "Get All Videos",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/video?page=1&limit=10",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "video"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                },
+                                {
+                                    "key": "query",
+                                    "value": "",
+                                    "description": "Search query"
+                                },
+                                {
+                                    "key": "sortBy",
+                                    "value": "createdAt",
+                                    "description": "Sort by field (views, createdAt, duration)"
+                                },
+                                {
+                                    "key": "sortType",
+                                    "value": "desc",
+                                    "description": "Sort type (asc, desc)"
+                                },
+                                {
+                                    "key": "userId",
+                                    "value": "",
+                                    "description": "Filter by user ID"
+                                }
+                            ]
+                        },
+                        "description": "Get all published videos with pagination and search"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Upload Video",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "title",
+                                    "value": "My Demo Video",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "description",
+                                    "value": "This is a demo video for the interview",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "videoFile",
+                                    "type": "file",
+                                    "src": []
+                                },
+                                {
+                                    "key": "thumbnail",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/video",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "video"]
+                        },
+                        "description": "Upload a new video with thumbnail (requires authentication)"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Video Details",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 200) {",
+                                    "    const response = pm.response.json();",
+                                    "    if (response.success && response.data._id) {",
+                                    "        pm.environment.set('video_id', response.data._id);",
+                                    "        console.log('Video ID saved:', response.data._id);",
+                                    "    }",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/video/v/{{video_id}}",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "video", "v", "{{video_id}}"]
+                        },
+                        "description": "Get detailed information about a specific video (requires authentication)"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Video",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "title",
+                                    "value": "Updated Video Title",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "description",
+                                    "value": "Updated video description",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "thumbnail",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/video/v/{{video_id}}",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "video", "v", "{{video_id}}"]
+                        },
+                        "description": "Update video details (title, description, thumbnail) - requires authentication"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Video",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/video/v/{{video_id}}",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "video", "v", "{{video_id}}"]
+                        },
+                        "description": "Delete a video - requires authentication"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Toggle Publish Status",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/video/toggle/publish/{{video_id}}",
+                            "host": ["{{base_url}}"],
+                            "path": [
+                                "api",
+                                "v1",
+                                "video",
+                                "toggle",
+                                "publish",
+                                "{{video_id}}"
+                            ]
+                        },
+                        "description": "Toggle video publish/unpublish status - requires authentication"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Comments",
+            "item": [
+                {
+                    "name": "Get Video Comments",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/comment/{{video_id}}?page=1&limit=10",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "comment", "{{video_id}}"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                }
+                            ]
+                        },
+                        "description": "Get all comments for a specific video - requires authentication"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Add Comment",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 201) {",
+                                    "    const response = pm.response.json();",
+                                    "    if (response.success && response.data._id) {",
+                                    "        pm.environment.set('comment_id', response.data._id);",
+                                    "        console.log('Comment ID saved:', response.data._id);",
+                                    "    }",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"content\": \"This is a great video! Thanks for sharing.\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/comment/{{video_id}}",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "comment", "{{video_id}}"]
+                        },
+                        "description": "Add a comment to a video - requires authentication"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Comment",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"content\": \"Updated comment content\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/comment/c/{{comment_id}}",
+                            "host": ["{{base_url}}"],
+                            "path": [
+                                "api",
+                                "v1",
+                                "comment",
+                                "c",
+                                "{{comment_id}}"
+                            ]
+                        },
+                        "description": "Update an existing comment - requires authentication"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Comment",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/comment/c/{{comment_id}}",
+                            "host": ["{{base_url}}"],
+                            "path": [
+                                "api",
+                                "v1",
+                                "comment",
+                                "c",
+                                "{{comment_id}}"
+                            ]
+                        },
+                        "description": "Delete a comment - requires authentication"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Likes",
+            "item": [
+                {
+                    "name": "Toggle Video Like",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/likes/toggle/v/{{video_id}}",
+                            "host": ["{{base_url}}"],
+                            "path": [
+                                "api",
+                                "v1",
+                                "likes",
+                                "toggle",
+                                "v",
+                                "{{video_id}}"
+                            ]
+                        },
+                        "description": "Like or unlike a video - requires authentication"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Toggle Comment Like",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/likes/toggle/c/{{comment_id}}",
+                            "host": ["{{base_url}}"],
+                            "path": [
+                                "api",
+                                "v1",
+                                "likes",
+                                "toggle",
+                                "c",
+                                "{{comment_id}}"
+                            ]
+                        },
+                        "description": "Like or unlike a comment - requires authentication"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Liked Videos",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/likes/videos",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "likes", "videos"]
+                        },
+                        "description": "Get all videos liked by current user - requires authentication"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Dashboard",
+            "item": [
+                {
+                    "name": "Get Channel Stats",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/dashboard/stats",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "dashboard", "stats"]
+                        },
+                        "description": "Get channel statistics (views, likes, subscribers, videos) - requires authentication"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Channel Videos",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/dashboard/videos",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "v1", "dashboard", "videos"]
+                        },
+                        "description": "Get all videos uploaded by current user - requires authentication"
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:3000",
+            "type": "string"
+        },
+        {
+            "key": "access_token",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "refresh_token",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "user_id",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "video_id",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "comment_id",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "username",
+            "value": "demouser",
+            "type": "string"
+        }
+    ]
+}
