@@ -192,7 +192,7 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/your-collection-id)
 
-**Download Collection:** [Video_Streaming_API.postman_collection.json](https://raw.githubusercontent.com/your-username/your-repo/main/Video_Streaming_API.postman_collection.json)
+**Download Collection:** [Video_Streaming_API.postman_collection.json](https://raw.githubusercontent.com/abhinav1karthik/youtube-backend/main/Video_Streaming_API.postman_collection.json)
 
 ### Features
 
