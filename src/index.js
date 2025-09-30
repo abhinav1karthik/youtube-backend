@@ -8,7 +8,7 @@ dotenv.config();
 export default app;
 
 // For local development, start the server
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
     connectToDB()
         .then(() => {
             app.listen(process.env.PORT || 8000, () => {
@@ -16,6 +16,16 @@ if (process.env.NODE_ENV !== 'production') {
             });
         })
         .catch((error) => console.log("MONGODB connection failed!!!: ", error));
+} else {
+    // For production, try to connect to DB but don't block the app
+    connectToDB()
+        .then(() => {
+            console.log("MongoDB connected successfully in production");
+        })
+        .catch((error) => {
+            console.log("MONGODB connection failed in production: ", error);
+            // Don't exit, let the app run without DB for now
+        });
 }
 
 /**import express from 'express'
