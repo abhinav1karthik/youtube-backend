@@ -823,6 +823,11 @@
             "type": "string"
         },
         {
+            "key": "production_url",
+            "value": "https://your-app-name.vercel.app",
+            "type": "string"
+        },
+        {
             "key": "access_token",
             "value": "",
             "type": "string"
