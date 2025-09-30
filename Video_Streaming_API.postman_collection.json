@@ -824,7 +824,7 @@
         },
         {
             "key": "production_url",
-            "value": "https://your-app-name.vercel.app",
+            "value": "https://youtube-backend-flrog4xh0-abhinav1karthiks-projects.vercel.app",
             "type": "string"
         },
         {

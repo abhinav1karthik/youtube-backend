@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         console.log("MongoDB connection failed:", error);
         // Continue without DB for now
     }
-    
+
     // Handle the request with Express app
     return app(req, res);
 }
